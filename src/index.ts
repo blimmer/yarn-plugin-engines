@@ -14,6 +14,9 @@ const verifyEngines =
       return;
     }
 
+    const hasDependabotEnv = Object.keys(process.env).some(envVar => envVar.includes("DEPENDABOT"));
+    if (hasDependabotEnv) return;
+
     const { engines = {} } = project.getWorkspaceByCwd(project.cwd).manifest.raw;
     const options: EngineCheckerOptions = { project, errorReporter };
     const engineCheckers: EngineChecker[] = [new NodeEngineChecker(options), new YarnEngineChecker(options)];
